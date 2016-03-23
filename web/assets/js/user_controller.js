@@ -20,7 +20,9 @@ App.controller('UserController',['$scope', 'UserService', function($scope, UserS
     self.createUser = function(user){
         UserService.createUser(user)
                 .then(
-                    self.fetchAllUsers(),
+                    function(){
+                      self.fetchAllUsers();  
+                    },
                     function(errResponse){
                         console.error('Error while creating user');
                     }
@@ -30,7 +32,9 @@ App.controller('UserController',['$scope', 'UserService', function($scope, UserS
     self.updateUser = function(user, id){
         UserService.updateUser(user, id)
                 .then(
-                    self.fetchAllUsers(),
+                    function(){
+                      self.fetchAllUsers();  
+                    },
                     function(errResponse){
                         console.error('Error while updating user');
                     }
@@ -40,7 +44,9 @@ App.controller('UserController',['$scope', 'UserService', function($scope, UserS
     self.deleteUser = function(id){
         UserService.deleteUser(id)
                 .then(
-                    self.fetchAllUsers(),
+                    function(){
+                      self.fetchAllUsers();  
+                    },
                     function(errResponse){
                         console.error('Error while deleting user');
                     }

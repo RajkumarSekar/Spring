@@ -24,16 +24,16 @@ import javax.persistence.Table;
 @Table(name = "user_test")
 public class User implements Serializable{
     
-    private long id;
+    private Long id;
     private String username;
     private String address;
     private String email;
     
     public User(){
-        id=0;
+        id=0l;
     }
      
-    public User(long id, String username, String address, String email){
+    public User(Long id, String username, String address, String email){
         this.id = id;
         this.username = username;
         this.address = address;
