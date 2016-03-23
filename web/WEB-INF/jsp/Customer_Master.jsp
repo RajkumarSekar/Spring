@@ -54,7 +54,7 @@
                                         <label class="col-md-5 control-label"><strong> City</strong></label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" name="city" id="city" 
-                                                      data-html="true" data-placement="left" placeholder="City"/>
+                                                   data-html="true" data-placement="left" placeholder="City"/>
 
                                         </div>
                                     </div>
@@ -62,7 +62,7 @@
                                         <label class="col-md-5 control-label"><strong> Postal Code</strong></label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" name="postalCode" id="postalCode" 
-                                                      data-html="true" data-placement="left" placeholder="City"/>
+                                                   data-html="true" data-placement="left" placeholder="City"/>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                         <label class="col-md-5 control-label"><strong> Country</strong></label>
                                         <div class="col-md-7">
                                             <select class="form-control" name="country" id="country" 
-                                                      data-html="true" data-placement="left" placeholder="Country">
+                                                    data-html="true" data-placement="left" placeholder="Country">
                                                 <option value="">-Select-</option>
                                                 <c:if test="${not empty countryList}">
                                                     <c:forEach items="${countryList}" var="country">
@@ -86,7 +86,7 @@
                                         <label class="col-md-5 control-label"><strong> State</strong></label>
                                         <div class="col-md-7">
                                             <select class="form-control" name="state" id="state" 
-                                                      data-html="true" data-placement="left" placeholder="State">
+                                                    data-html="true" data-placement="left" placeholder="State">
                                                 <option value="">-Select-</option>
                                             </select>
                                         </div>
@@ -97,10 +97,10 @@
                                         <label class="col-md-5 control-label"><strong> <u class="scut">T</u>IN*</strong></label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" name="TIN" id="TIN" data-html="true"
-                                                      data-placement="left" placeholder="TIN"
-                                                      data-bv-notempty="true"
-                                                      data-bv-notempty-message="The TIN is required and cannot be empty" data-accesskey='a'
-                                                      />
+                                                   data-placement="left" placeholder="TIN"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message="The TIN is required and cannot be empty" data-accesskey='a'
+                                                   />
 
                                         </div>
                                     </div>
@@ -214,15 +214,16 @@
             $('#CMForm').bootstrapValidator('revalidateField', 'cstdate');
         });
 
-        $('#country').on('change',function(){
+
+        $('#country').on('change', function () {
             $.ajax({
                 url: "getStates.do",
                 type: 'POST',
                 data: {cid: $("#country").val()},
                 success: function (data, textStatus, jqXHR) {
-                    var option="<option>-Select-</option>"
-                    for(var i=0; i<data.length; i++){
-                        option += "<option value='"+data[i][0]+"'>"+data[i][1]+"</option>"
+                    var option = "<option>-Select-</option>"
+                    for (var i = 0; i < data.length; i++) {
+                        option += "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>"
                     }
                     $("#state").html(option);
                 },
@@ -274,12 +275,19 @@
             e.preventDefault();
             var $form = $(e.target),
                     validator = $form.data('bootstrapValidator');
+            
+           
+            var customerObj = $('#CMForm').serializeObject();
+            console.log(customerObj);
+
             $.ajax({
                 url: "soreCustomer.do",
                 type: 'POST',
                 cache: false,
                 async: false,
-                data: $("#CMForm").serialize(),
+                contentType: 'application/json',
+                dataType: 'json',
+                data: customerObj,
                 success: function (data)
                 {
                     var myclass = "alert-success";
@@ -297,11 +305,34 @@
                     $('#CMForm')[0].reset();
                     $('#CMForm').bootstrapValidator('resetForm', true);
                     $('#mmname').focus();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#test').html(jqXHR.responseText);
+                    //alert("Error: "+jqXHR.responseText);
+                    //alert(errorThrown);
                 }
             });
 
         });
     });
+
+
+    $.fn.serializeObject = function ()
+    {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
 
 </script>
 

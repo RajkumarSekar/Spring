@@ -47,6 +47,34 @@ public class CustomerMaster implements Serializable{
     private String createdBy;
     private Date createdDateTime;
 
+    public CustomerMaster() {
+        customerId = null;
+        recordStatus = null;
+        cDate = null;
+        createdBy = null;
+        createdDateTime = null;
+    }
+
+    public CustomerMaster(String customerName, String address, String city, State state, String postalCode, Country country, String TIN, String CSTNo, Date CSTDate, String phone, String fax, String emailId, String website, String contact, String contactPhone) {
+        this.customerName = customerName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.TIN = TIN;
+        this.CSTNo = CSTNo;
+        this.CSTDate = CSTDate;
+        this.phone = phone;
+        this.fax = fax;
+        this.emailId = emailId;
+        this.website = website;
+        this.contact = contact;
+        this.contactPhone = contactPhone;
+    }
+    
+    
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CID")
