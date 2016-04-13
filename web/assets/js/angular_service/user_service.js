@@ -3,7 +3,8 @@
 App.factory('UserService',['$http', '$q', function($http, $q){
     return {
         fetchAllUsers: function(){
-            return $http.get('http://localhost:8084/template/user/')
+            
+            return $http.get('http://localhost:8084/springDemo/user.do')
                     .then(
                         function(response){
                             return response.data;
@@ -16,7 +17,9 @@ App.factory('UserService',['$http', '$q', function($http, $q){
         },
         
         createUser: function(user){
-            return $http.post('http://localhost:8084/template/user/', user)
+            
+           
+            return $http.post('http://localhost:8084/springDemo/user.do', user)
                     .then(
                         function(response){
                             return response.data;
@@ -29,7 +32,7 @@ App.factory('UserService',['$http', '$q', function($http, $q){
         },
         
         updateUser: function(user, id){
-            return $http.put('http://localhost:8084/template/user/'+id, user)
+            return $http.put('http://localhost:8084/springDemo/'+id+'/user.do', user)
                     .then(
                         function(response){
                             return response.data;
@@ -42,7 +45,7 @@ App.factory('UserService',['$http', '$q', function($http, $q){
         },
         
         deleteUser: function(id){
-            return $http.delete('http://localhost:8084/template/user/'+id)
+            return $http.delete('http://localhost:8084/springDemo/'+id+'/user.do')
                     .then(
                         function(response){
                             return response.data;

@@ -31,7 +31,7 @@ public class AngularRestController {
     UserService userService;
     
     //=================== Retrive all the users ========================//
-    @RequestMapping(value = "/user/", method = RequestMethod.GET)
+    @RequestMapping(value = "/user.do", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers(){
         List<User> users = userService.findAllUsers();
         if(users.isEmpty()){
@@ -41,7 +41,7 @@ public class AngularRestController {
     }
     
     //=================== Retriveing single user ========================//
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{id}/user.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUser(@PathVariable("id") long id){
         System.out.println("Fetching User with id " + id);
         User user = userService.findById(id);
@@ -53,7 +53,7 @@ public class AngularRestController {
     }
     
     //=================== Create a user ========================//
-    @RequestMapping(value = "/user/", method = RequestMethod.POST)
+    @RequestMapping(value = "/user.do", method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder){
         System.out.println("Creating User " + user.getUsername());
         
@@ -64,12 +64,12 @@ public class AngularRestController {
         
         userService.saveUser(user);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/{id}/user.do").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
     
     //=================== Update a user ========================//
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/user.do", method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
         System.out.println("Updating User " + id);
           
@@ -89,7 +89,7 @@ public class AngularRestController {
     }
     
     //=================== Delete a user ========================//
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/user.do", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
         System.out.println("Fetching & Deleting User with id " + id);
   
@@ -104,7 +104,7 @@ public class AngularRestController {
     }
     
     //=================== Delete all users ========================//
-    @RequestMapping(value = "/user/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user.do", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteAllUsers() {
         System.out.println("Deleting All Users");
   

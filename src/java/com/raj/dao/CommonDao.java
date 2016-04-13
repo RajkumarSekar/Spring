@@ -35,7 +35,7 @@ public class CommonDao {
     
     public List<Module> loadMenu(){
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Module ORDER BY moduleOrder").list();
+        return session.createQuery("FROM Module WHERE parent is null ORDER BY moduleOrder").list();
     }
     
     public List<Country> getCountries(){

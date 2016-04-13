@@ -1,10 +1,10 @@
 'use strict'
 
-App.controller('UserController',['$scope', 'UserService', function($scope, UserService){
+App.controller('UserController',['$scope', '$http', 'UserService', function($scope, $http, UserService){
     var self = this;
     self.user = {id:null, username:'', email:'', address:''};
     self.users = [];
-    
+    self.test="hai this is test messge";
     self.fetchAllUsers = function(){
       UserService.fetchAllUsers()
                 .then(
@@ -90,3 +90,5 @@ App.controller('UserController',['$scope', 'UserService', function($scope, UserS
     };
     
 }]);
+
+angular.bootstrap(document.getElementById("myApp_1"),['myApp']);

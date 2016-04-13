@@ -5,6 +5,10 @@
  */
 package com.raj.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -98,6 +102,8 @@ public class Module implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "mod_parent")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "moduleCode")
+    @JsonIdentityReference(alwaysAsId = true)
     public Module getParent() {
         return parent;
     }
@@ -117,6 +123,8 @@ public class Module implements Serializable {
     }
 
     @OneToMany(mappedBy = "module", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "roleRightsId")
+    @JsonIdentityReference(alwaysAsId = true)
     public Set<RoleRights> getRoleRights() {
         return roleRights;
     }

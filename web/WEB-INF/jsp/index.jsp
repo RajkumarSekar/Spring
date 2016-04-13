@@ -390,7 +390,7 @@
             <div class="page-container">
 
                 <!-- Page Sidebar -->
-                <div class="page-sidebar" id="sidebar">
+                <div class="page-sidebar" id="sidebar" ng-app="menuApp" ng-controller="menuController as ctrl">
 
                 </div>
                 <!-- /Page Sidebar -->
@@ -745,7 +745,7 @@
                             </sec:authorize>
                         </div>
 
-                        <div class="row" ng-app="myApp">
+                        <div class="row" ng-app="myApp" id="myApp_1">
 
                             <div class="col-md-12 col-sm-12 col-xs-12" ng-controller="UserController as ctrl">
                                 <div class="widget">
@@ -788,7 +788,7 @@
 
                                             <div class="form-group">
                                                 <div class="col-md-offset-6 col-md-8">
-                                                    <button type="submit" class="btn btn-blue" data-accesskey="s"><u class="scut">S</u>ubmit</button>
+                                                    <button type="submit" class="btn btn-blue" data-accesskey="s">{{(ctrl.user.id!=null)?"Update":"Create"}}</button>
                                                 </div>
                                             </div>                                
                                         </form>
@@ -1613,8 +1613,11 @@
         <script src="<c:url value="/assets/js/ajax-content-loader.js"/>"></script>
         <script src="<c:url value="/assets/js/angular.min.js"/>"></script>
         <script src="<c:url value="/assets/js/app.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/user_service.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/user_controller.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/angular_controller/menu_controller.js"/>" type="text/javascript"></script>
+        
+        <script src="<c:url value="/assets/js/angular_service/user_service.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/angular_controller/user_controller.js"/>" type="text/javascript"></script>
+        
 
         <!-- Chat Socket IO -->
         <!--        <script src="http://abcom277:3000/socket.io/socket.io.js"></script>-->
