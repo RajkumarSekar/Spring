@@ -29,7 +29,7 @@
                             <form id="CMForm" method="post" class="form-horizontal bv-form" novalidate="novalidate">
                                 <div class="col-md-12">
                                     <div class="form-group col-md-6">
-                                        <label class="col-md-5 control-label"><strong>Customer <u class="scut">N</u>ame*</strong></label>
+                                        <label class="col-md-5 control-label"><strong>Customer{{check}} <u class="scut">N</u>ame*</strong></label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" name="customerName" id="customerName" 
                                                    data-html="true" data-placement="left" placeholder="Customer Name"

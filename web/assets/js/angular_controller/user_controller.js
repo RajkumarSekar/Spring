@@ -91,4 +91,4 @@ App.controller('UserController',['$scope', '$http', 'UserService', function($sco
     
 }]);
 
-angular.bootstrap(document.getElementById("myApp_1"),['myApp']);
+//angular.bootstrap(document.getElementById("myApp_1"),['myApp']);
