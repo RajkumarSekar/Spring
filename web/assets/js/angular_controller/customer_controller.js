@@ -1,13 +1,31 @@
 'use strict'
-App.controllerProvider.register('customerController', ['$scope', function ($scope) {
-        var self = this;
-
+App.controllerProvider.register('customerController', ['$scope', '$http', function ($scope, $http) {
+        $scope.list = [];
         $scope.submitCustomer = function () {
-            alert($scope.CMForm.$valid);
-            // check to make sure the form is completely valid
-            if ($scope.CMForm.$valid) {
-                alert('our form is amazing');
-            }
+
+
+
+            //var customerObj = {"customerName": "cust", "address": "address", "city": "city",  "TIN": "tin", "CSTNo": "cstno", "phone": "789654", "fax": "fax", "emailId": "email", "website": "web", "contact": "cont", "contactPhone": "cont"};
+            var customerObj = {"customerName": "cust name", "country.countryId":98};
+
+            //console.log(JSON.stringify(customerObj));
+            var response = $http.post('soreCustomer.do', customerObj);
+            response.success(function (data, status, headers, config) {
+                console.log("user return data", data);
+                $scope.list.push(data);
+            });
+            response.error(function (data, status, headers, config) {
+                alert("Exception details: " + JSON.stringify({data: data}));
+            });
+//            // check to make sure the form is completely valid
+//            if ($scope.CMForm.$valid) {
+//                // var customerObj = $('#CMForm').serialize();              
+//
+//
+//
+//
+//
+//            }
 
         };
     }]);
@@ -37,7 +55,7 @@ $(document).ready(function () {
         });
     });
     var prefix = '';
-    /*$('#CMForm').bootstrapValidator({
+    /*    $('#CMForm').bootstrapValidator({
      // Only disabled elements are excluded
      // The invisible elements belonging to inactive tabs must be validated
      excluded: [':disabled'],
@@ -114,18 +132,3 @@ $(document).ready(function () {
      });*/
 });
 
-$.fn.serializeObject = function () {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function () {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};

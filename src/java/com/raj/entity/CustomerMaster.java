@@ -54,14 +54,18 @@ public class CustomerMaster implements Serializable{
         createdBy = null;
         createdDateTime = null;
     }
-
-    public CustomerMaster(String customerName, String address, String city, State state, String postalCode, Country country, String TIN, String CSTNo, Date CSTDate, String phone, String fax, String emailId, String website, String contact, String contactPhone) {
+    
+    public CustomerMaster(String customerName){
+        this.customerName = customerName;
+    }
+/*
+    public CustomerMaster(String customerName, String address, String city, String postalCode, String TIN, String CSTNo, Date CSTDate, String phone, String fax, String emailId, String website, String contact, String contactPhone) {
         this.customerName = customerName;
         this.address = address;
         this.city = city;
-        this.state = state;
+//        this.state = state;
         this.postalCode = postalCode;
-        this.country = country;
+//        this.country = country;
         this.TIN = TIN;
         this.CSTNo = CSTNo;
         this.CSTDate = CSTDate;
@@ -73,7 +77,7 @@ public class CustomerMaster implements Serializable{
         this.contactPhone = contactPhone;
     }
     
-    
+    */
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

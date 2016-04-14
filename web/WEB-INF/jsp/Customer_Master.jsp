@@ -31,7 +31,7 @@
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="customerName" id="customerName" 
                                                placeholder="Customer Name"
-                                               ng-model="ctrl.customerName" required/>
+                                               ng-model="customerName" required/>
                                         <small ng-show="CMForm.customerName.$invalid && !CMForm.customerName.$pristine" class="help-block">Customer Name is required.</small>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                     <label class="col-md-5 control-label"><strong>Address*</strong></label>
                                     <div class="col-md-7">
                                         <textarea class="form-control" name="address" id="address"
-                                                  placeholder="Address" ng-model="ctrl.address" required/></textarea>
+                                                  placeholder="Address" ng-model="address" required/></textarea>
                                         <small ng-show="CMForm.address.$invalid && !CMForm.address.$pristine" class="help-block">Customer Address is required.</small>
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                     <label class="col-md-5 control-label"><strong> City*</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="city" id="city" 
-                                               placeholder="City" ng-model="ctrl.city" required/>
+                                               placeholder="City" ng-model="city" required/>
                                         <small ng-show="CMForm.city.$invalid && !CMForm.city.$pristine" class="help-block">Customer City is required.</small>
                                     </div>
                                 </div>
@@ -66,8 +66,8 @@
                                 <div class="form-group col-md-6" ng-class="{ 'has-error' : CMForm.country.$invalid && !CMForm.country.$pristine }">
                                     <label class="col-md-5 control-label"><strong> Country* </strong></label>
                                     <div class="col-md-7">
-                                        <select class="form-control" name="country" id="country" 
-                                                ng-model="ctrl.country" placeholder="Country" required>
+                                        <select class="form-control" name="country.countryId" id="country" 
+                                                ng-model="country" placeholder="Country" required>
                                             <option value="">-Select-</option>
                                             <c:if test="${not empty countryList}">
                                                 <c:forEach items="${countryList}" var="country">
@@ -81,8 +81,8 @@
                                 <div class="form-group col-md-6" ng-class="{ 'has-error' : CMForm.state.$invalid && !CMForm.state.$pristine }">
                                     <label class="col-md-5 control-label"><strong> State*</strong></label>
                                     <div class="col-md-7">
-                                        <select class="form-control" name="state" id="state" 
-                                                ng-model="ctrl.state" placeholder="State" required>
+                                        <select class="form-control" name="state.SID" id="state" 
+                                                ng-model="state" placeholder="State" required>
                                             <option value="">-Select-</option>
                                         </select>
                                         <small ng-show="CMForm.state.$invalid && !CMForm.state.$pristine" class="help-block">Customer State is required.</small>
@@ -94,7 +94,7 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">T</u>IN*</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="TIN" id="TIN"
-                                               placeholder="TIN" ng-model="ctrl.TIN" required/>
+                                               placeholder="TIN" ng-model="TIN" required/>
                                         <small ng-show="CMForm.TIN.$invalid && !CMForm.TIN.$pristine" class="help-block">Customer TIN No. is required.</small>
                                     </div>
                                 </div>
@@ -104,8 +104,7 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">C</u>STNO</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="CSTNo" id="CSTNo"
-                                               data-html="true" data-placement="left" placeholder="CSTNO"
-                                               />
+                                               placeholder="CSTNO" ng-model="CSTNo"/>
                                     </div>
                                 </div>
 
@@ -114,7 +113,8 @@
 
                                     <div class="col-md-7">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="CSTDate" id="CSTDate" placeholder="CSTDate" data-accesskey="D" data-date-format="yyyy-mm-dd" readonly="">
+                                            <input type="text" class="form-control" name="CSTDate" id="CSTDate" 
+                                                   placeholder="CSTDate" ng-model="CSTDate"  readonly>
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span>
@@ -128,8 +128,7 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">P</u>hone No</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="phone" id="phone"  
-                                               data-html="true" data-placement="left" placeholder="Phone No"
-                                               />
+                                               ng-model="phone" placeholder="Phone No"/>
                                     </div>
                                 </div>
 
@@ -137,8 +136,7 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">F</u>ax</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="fax" id="fax" 
-                                               data-html="true" data-placement="left" placeholder="Fax"
-                                               />
+                                               ng-model="fax" placeholder="Fax"/>
                                     </div>
                                 </div>
                             </div>
@@ -147,8 +145,7 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">E</u>mail ID</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="emailId" id="emailId"  
-                                               data-html="true" data-placement="left" placeholder="Email Id"
-                                               />
+                                               ng-model="emailId" placeholder="Email Id"/>
                                     </div>
                                 </div>
 
@@ -156,8 +153,7 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">W</u>ebsite </strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="website" id="website"  
-                                               data-html="true" data-placement="left" placeholder="Website"
-                                               />
+                                               ng-model="website" placeholder="Website"/>
                                     </div>
                                 </div>
                             </div>
@@ -166,23 +162,21 @@
                                     <label class="col-md-5 control-label"><strong> <u class="scut">C</u>ontact Name</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="contact" id="contact"  
-                                               data-html="true" data-placement="left" placeholder="Contact"
-                                               />
+                                               ng-model="contact" placeholder="Contact"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="col-md-5 control-label"><strong> <u class="scut">C</u>ontact Phone No</strong></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control capsON" name="contactPhone" id="contactPhone"   
-                                               data-html="true" data-placement="left" placeholder="Contact Phone No"/>
+                                               ng-model="contactPhone" placeholder="Contact Phone No"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-offset-6 col-md-8">                                        
-                                    <input type="hidden" name="prefix" id="prefix" value="">                                    
-                                    <button type="submit" class="btn btn-blue" ng-disabled="!CMForm.$valid"  data-accesskey='s'><u class="scut">S</u>ubmit</button>
+                                <div class="col-md-offset-6 col-md-8">                                                                            
+                                    <button type="submit" class="btn btn-blue"  data-accesskey='s'><u class="scut">S</u>ubmit</button>
                                 </div>
                             </div>                                
                         </form>

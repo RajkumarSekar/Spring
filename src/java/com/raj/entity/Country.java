@@ -38,6 +38,8 @@ public class Country implements Serializable{
     private Date createdDateTime;
     
     private Set<State> states = new HashSet<State>(0);
+    private Set<CustomerMaster> customer = new HashSet<CustomerMaster>(0);
+    private Set<CustomerMaster1> customer1 = new HashSet<CustomerMaster1>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,6 +115,24 @@ public class Country implements Serializable{
 
     public void setStates(Set<State> states) {
         this.states = states;
+    }
+
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    public Set<CustomerMaster> getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Set<CustomerMaster> customer) {
+        this.customer = customer;
+    }
+
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
+    public Set<CustomerMaster1> getCustomer1() {
+        return customer1;
+    }
+
+    public void setCustomer1(Set<CustomerMaster1> customer1) {
+        this.customer1 = customer1;
     }
     
     

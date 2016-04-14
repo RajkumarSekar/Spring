@@ -7,8 +7,10 @@ package com.raj.controller;
 
 import com.raj.entity.Country;
 import com.raj.entity.CustomerMaster;
+import com.raj.entity.CustomerMaster1;
 import com.raj.entity.Module;
 import com.raj.entity.State;
+import com.raj.entity.User;
 import com.raj.service.CommonService;
 import java.util.HashMap;
 import java.util.List;
@@ -30,101 +32,106 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
 /**
  *
  * @author rajkumar.s
  */
 @Controller
 public class HomeController {
-    
-    public HashMap<Long,Module> moduleMap;
+
+    public HashMap<Long, Module> moduleMap;
     public List<Module> moduleList;
-    
-    @RequestMapping(value = {"/","/home.do"})
-    public String index(){
+
+    @RequestMapping(value = {"/", "/home.do"})
+    public String index() {
         return "index";
     }
-    
+
     @Autowired
     private CommonService commonService;
-    
+
     @RequestMapping("/load_menu.do")
-    public ModelAndView load_menu(){
+    public ModelAndView load_menu() {
         Map<String, Object> map = new HashMap<>();
         moduleList = commonService.loadMenu();
         map.put("moduleList", moduleList);
-        return new ModelAndView("/common/menu",map);
+        return new ModelAndView("/common/menu", map);
     }
-    
+
     @RequestMapping("/menu_json.do")
-    public ResponseEntity<List<Module>> menu_json(){
-        
+    public ResponseEntity<List<Module>> menu_json() {
+
         moduleList = commonService.loadMenu();
         return new ResponseEntity<>(moduleList, HttpStatus.OK);
     }
-    
+
     @RequestMapping("/dashboard.do")
-    public String dashboard(){
+    public String dashboard() {
         return "dashboard";
     }
-    
+
     @RequestMapping("/chat.do")
-    public String chat(){
+    public String chat() {
         return "/common/chat";
     }
-    
+
     @RequestMapping("/blank.do")
-    public String blank(){
+    public String blank() {
         return "blank";
     }
-    
+
     @RequestMapping("/newcustomer.do")
-    public ModelAndView newCustomer(){
+    public ModelAndView newCustomer() {
         List<Country> countryList = commonService.getCountries();
         Map<String, Object> model = new HashMap<>();
         model.put("countryList", countryList);
         return new ModelAndView("Customer_Master", model);
     }
-    
+
     @RequestMapping("/newuser.do")
-    public ModelAndView newuser(){
+    public ModelAndView newuser() {
         return new ModelAndView("UserManagement");
     }
-    
+
     @RequestMapping(value="/soreCustomer.do", method = RequestMethod.POST)
-    public ResponseEntity<String> soreCustomer(@RequestBody CustomerMaster customer){
+    public ResponseEntity<CustomerMaster1> soreCustomer(@RequestBody CustomerMaster1 customer){
         
         Long id = (Long) commonService.insert(customer);
-        return new ResponseEntity<>(customer.getAddress(), HttpStatus.OK);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
         //return "test";
     }
-    
+//    @RequestMapping(value = "/soreCustomer.do", method = RequestMethod.POST)
+//    public ResponseEntity<User> soreCustomer(@RequestBody User user) {
+//
+//        Long id = (Long) commonService.insert(user);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//        //return "test";
+//    }
+
     @RequestMapping(value = "/getStates.do", headers = "Accept=application/json")
-    public ResponseEntity<List<State>> getStatesOption(@RequestParam("cid") Long CID){
+    public ResponseEntity<List<State>> getStatesOption(@RequestParam("cid") Long CID) {
         List<State> stateList;
         stateList = commonService.getStates(CID);
         return new ResponseEntity<>(stateList, HttpStatus.OK);
     }
-    
+
     @RequestMapping("/access_denied.do")
-    public String access_denied(){
+    public String access_denied() {
         return "access_denied";
     }
-    
+
     @RequestMapping("/login.do")
-    public String login(){
+    public String login() {
         return "login";
     }
-    
-    @RequestMapping(value="/logout.do")
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+
+    @RequestMapping(value = "/logout.do")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){    
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login.do?logout";
-    } 
+    }
 
 }

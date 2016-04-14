@@ -7,6 +7,8 @@ package com.raj.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +37,8 @@ public class State implements Serializable{
     private Date cDate;
     private String createdBy;
     private Date createdDateTime;
+    
+    private Set<CustomerMaster> customer = new HashSet<CustomerMaster>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -101,6 +106,16 @@ public class State implements Serializable{
     public void setCreatedDateTime(Date createdDateTime) {
         this.createdDateTime = createdDateTime;
     }
+
+    @OneToMany(fetch = FetchType.EAGER)
+    public Set<CustomerMaster> getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Set<CustomerMaster> customer) {
+        this.customer = customer;
+    }
+    
     
     
 }

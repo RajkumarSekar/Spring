@@ -417,7 +417,7 @@
 
         <!--Beyond Scripts-->
         <script src="<c:url value="/assets/js/beyond.js"/>"></script>
-
+        <script src="<c:url value="/assets/js/common.js"/>" type="text/javascript"></script>
         <!--Page Related Scripts-->
         <!--Sparkline Charts Needed Scripts-->
         <script src="<c:url value="/assets/js/charts/sparkline/jquery.sparkline.js"/>"></script>
