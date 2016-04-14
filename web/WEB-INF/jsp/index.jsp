@@ -43,6 +43,7 @@
 
         <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
         <script src="<c:url value="/assets/js/skins.min.js"/>"></script>
+        <link href="<c:url value="/assets/css/pace.css"/>" rel="stylesheet" type="text/css"/>
     </head>
     <!-- /Head -->
     <!-- Body -->
@@ -51,9 +52,7 @@
         <c:set var="username" value="${user.username}"/>
 
         <!-- Loading Container -->
-        <div class="loading-container">
-            <div class="loader"></div>
-        </div>
+        <div class="pace"></div>
         <!--  /Loading Container -->
         <!-- Navbar -->
         <div class="navbar">
@@ -77,7 +76,7 @@
                     <div class="navbar-header pull-right">
                         <div class="navbar-account">
                             <ul class="account-area">
-                                
+
                                 <li>
                                     <a class="wave in" id="chat-link" title="Chat" href="#">
                                         <i class="icon glyphicon glyphicon-comment"></i>
@@ -187,10 +186,10 @@
                             <div class="searchhelper">Search Your Contacts and Chat History</div>
                         </div>
 
-                        
+
                     </div>
                     <div class="chatbar-messages" style="display: none;">
-                        
+
                     </div>
                 </div>
                 <!-- /Chat Bar -->
@@ -231,8 +230,10 @@
                     <!-- /Page Header -->
                     <!-- Page Body -->
                     <div class="page-body" id="main-container" ng-app="myApp">
-
- <div ng-view></div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div id="results"></div>
+                        </div>
+                        <div ng-view></div>
                     </div>
                     <!-- /Page Body -->
                 </div>
@@ -262,155 +263,155 @@
         <script>
             /* Do not enable this csrf comment
              * var token = $("meta[name='_csrf']").attr("content");
-                    var header = $("meta[name='_csrf_header']").attr("content");
-                    $(document).ajaxSend(function (e, xhr, options) {
-            xhr.setRequestHeader(header, token);
-            });*/
+             var header = $("meta[name='_csrf_header']").attr("content");
+             $(document).ajaxSend(function (e, xhr, options) {
+             xhr.setRequestHeader(header, token);
+             });*/
             // Chat code
-                    /*
-                     var socket = io.connect('http://abcom277:3000');
+            /*
+             var socket = io.connect('http://abcom277:3000');
+             
+             var user = "${username}";
+             socket.emit('nickname',user);
+             
+             socket.on('usernames', function(names){
+             var html = '', html1='';
+             for(i=0; i<names.length; i++){
+             
+             var username = names[i];
+             var contact = '';
+             var chatmsg = '';
+             if(username !== user){
+             contact = '<li class="contact" contact-name="'+username+'">'
+             +'<div class="contact-avatar"><img src="/springDemo/assets/img/avatars/divyia.jpg"></div>'
+             +'<div class="contact-info">'
+             +'<div class="contact-name">'+username+'</div>'
+             +'<div class="contact-status"><div class="online"></div><div class="status">online</div></div>'
+             +'<div class="last-chat-time">last week</div>'
+             +'</div></li>';
+             
+             chatmsg = '<div class="chatbar-div" msg-to="'+username+'"><div class="messages-contact" >'
+             +'<div class="contact-avatar"><img src="/springDemo/assets/img/avatars/divyia.jpg"></div>'
+             +'<div class="contact-info">'
+             +'<div class="contact-name">'+username+'</div>'
+             +'<div class="contact-status"><div class="online"></div><div class="status">online</div></div>'
+             +'<div class="last-chat-time">a moment ago</div>'
+             +'<div class="back">'
+             +'<i class="fa fa-arrow-circle-left"></i>'
+             +'</div>'
+             +'</div>'
+             +'</div>'
+             +'<ul class="messages-list" style="overflow: hidden; width: auto; height: 393px;">'
+             +'<li class="message">'
+             +'<div class="message-info">'
+             +'<div class="bullet"></div>'
+             +'<div class="contact-name">Me</div>'
+             +'<div class="message-time">10:14 AM, Today</div>'
+             +'</div>'
+             +'<div class="message-body">'
+             +'Hi, Hope all is good. Are we meeting today?'
+             +'</div>'
+             +'</li>'
+             +'<li class="message reply">'
+             +'<div class="message-info">'
+             +'<div class="bullet"></div>'
+             +'<div class="contact-name">Divyia</div>'
+             +'<div class="message-time">10:15 AM, Today</div>'
+             +'</div>'
+             +'<div class="message-body">'
+             +'Hi, Hope all is good. Are we meeting today?'
+             +'</div>'
+             +'</li>'
+             
+             +'</ul>'
+             +'<div class="send-message">'
+             +'<span class="input-icon icon-right">'
+             +'<textarea rows="4" class="form-control msgtext" msg-from="'+user+'" msg-to="'+username+'" placeholder="Type your message"></textarea>'
+             +'<i class="fa fa-camera themeprimary"></i>'
+             +'</span>'
+             +'</div></div>';
+             
+             }
+             html += contact;
+             html1 += chatmsg;
+             }
+             $('.contacts-list').html(html);
+             $('.chatbar-messages').html(html1);
+             
+             $('.page-chatbar .chatbar-contacts .contact').click(function(e) { 
+             var toUser = $(this).attr("contact-name");
+             $('.page-chatbar .chatbar-contacts').hide();
+             $('.page-chatbar .chatbar-messages').show();
+             $('.page-chatbar .chatbar-messages .chatbar-div').hide();
+             $('.page-chatbar .chatbar-messages .chatbar-div[msg-to="'+toUser+'"]').show();
+             });
+             
+             $('.page-chatbar .chatbar-messages .back').click(function (e) {
+             $('.page-chatbar .chatbar-contacts').show();
+             $('.page-chatbar .chatbar-messages').hide();
+             });
+             
+             $('.msgtext').keyup(function(e){
+             var keyCode = e.which || e.keyCode;
+             
+             if(keyCode === 13){
+             var from = $(this).attr('msg-from');
+             var to = $(this).attr('msg-to');
+             var msg = $(this).val();
+             if(msg.trim() !== ''){
+             socket.emit('send message',{msg: msg, toUser: to});
+             $(this).val('');
+             var mymsg = '<li class="message">'
+             +'<div class="message-info">'
+             +'<div class="bullet"></div>'
+             +'<div class="contact-name">Me</div>'
+             +'<div class="message-time">10:15 AM, Today</div>'
+             +'</div>'
+             +'<div class="message-body">'
+             +msg
+             +'</div>'
+             +'</li>';
+             
+             $('.chatbar-div[msg-to="'+to+'"] .messages-list').append(mymsg);
+             }
+             }
+             });
+             
+             setSlimScroll();
+             
+             });
+             
+             socket.on('private message', function(data){
+             var msg = '<li class="message reply">'
+             +'<div class="message-info">'
+             +'<div class="bullet"></div>'
+             +'<div class="contact-name">'+data.nick+'</div>'
+             +'<div class="message-time">10:15 AM, Today</div>'
+             +'</div>'
+             +'<div class="message-body">'
+             +data.msg
+             +'</div>'
+             +'</li>';
+             $('.chatbar-div[msg-to="'+data.nick+'"] .messages-list').append(msg);
+             });
+             
+             */
 
-                     var user = "${username}";
-                     socket.emit('nickname',user);
-
-                     socket.on('usernames', function(names){
-                     var html = '', html1='';
-                     for(i=0; i<names.length; i++){
-
-                     var username = names[i];
-                     var contact = '';
-                     var chatmsg = '';
-                     if(username !== user){
-                     contact = '<li class="contact" contact-name="'+username+'">'
-                     +'<div class="contact-avatar"><img src="/springDemo/assets/img/avatars/divyia.jpg"></div>'
-                     +'<div class="contact-info">'
-                     +'<div class="contact-name">'+username+'</div>'
-                     +'<div class="contact-status"><div class="online"></div><div class="status">online</div></div>'
-                     +'<div class="last-chat-time">last week</div>'
-                     +'</div></li>';
-
-                     chatmsg = '<div class="chatbar-div" msg-to="'+username+'"><div class="messages-contact" >'
-                     +'<div class="contact-avatar"><img src="/springDemo/assets/img/avatars/divyia.jpg"></div>'
-                     +'<div class="contact-info">'
-                     +'<div class="contact-name">'+username+'</div>'
-                     +'<div class="contact-status"><div class="online"></div><div class="status">online</div></div>'
-                     +'<div class="last-chat-time">a moment ago</div>'
-                     +'<div class="back">'
-                     +'<i class="fa fa-arrow-circle-left"></i>'
-                     +'</div>'
-                     +'</div>'
-                     +'</div>'
-                     +'<ul class="messages-list" style="overflow: hidden; width: auto; height: 393px;">'
-                     +'<li class="message">'
-                     +'<div class="message-info">'
-                     +'<div class="bullet"></div>'
-                     +'<div class="contact-name">Me</div>'
-                     +'<div class="message-time">10:14 AM, Today</div>'
-                     +'</div>'
-                     +'<div class="message-body">'
-                     +'Hi, Hope all is good. Are we meeting today?'
-                     +'</div>'
-                     +'</li>'
-                     +'<li class="message reply">'
-                     +'<div class="message-info">'
-                     +'<div class="bullet"></div>'
-                     +'<div class="contact-name">Divyia</div>'
-                     +'<div class="message-time">10:15 AM, Today</div>'
-                     +'</div>'
-                     +'<div class="message-body">'
-                     +'Hi, Hope all is good. Are we meeting today?'
-                     +'</div>'
-                     +'</li>'
-
-                     +'</ul>'
-                     +'<div class="send-message">'
-                     +'<span class="input-icon icon-right">'
-                     +'<textarea rows="4" class="form-control msgtext" msg-from="'+user+'" msg-to="'+username+'" placeholder="Type your message"></textarea>'
-                     +'<i class="fa fa-camera themeprimary"></i>'
-                     +'</span>'
-                     +'</div></div>';
-
-                     }
-                     html += contact;
-                     html1 += chatmsg;
-                     }
-                     $('.contacts-list').html(html);
-                     $('.chatbar-messages').html(html1);
-
-                     $('.page-chatbar .chatbar-contacts .contact').click(function(e) { 
-                     var toUser = $(this).attr("contact-name");
-                     $('.page-chatbar .chatbar-contacts').hide();
-                     $('.page-chatbar .chatbar-messages').show();
-                     $('.page-chatbar .chatbar-messages .chatbar-div').hide();
-                     $('.page-chatbar .chatbar-messages .chatbar-div[msg-to="'+toUser+'"]').show();
-                     });
-
-                     $('.page-chatbar .chatbar-messages .back').click(function (e) {
-                     $('.page-chatbar .chatbar-contacts').show();
-                     $('.page-chatbar .chatbar-messages').hide();
-                     });
-
-                     $('.msgtext').keyup(function(e){
-                     var keyCode = e.which || e.keyCode;
-
-                     if(keyCode === 13){
-                     var from = $(this).attr('msg-from');
-                     var to = $(this).attr('msg-to');
-                     var msg = $(this).val();
-                     if(msg.trim() !== ''){
-                     socket.emit('send message',{msg: msg, toUser: to});
-                     $(this).val('');
-                     var mymsg = '<li class="message">'
-                     +'<div class="message-info">'
-                     +'<div class="bullet"></div>'
-                     +'<div class="contact-name">Me</div>'
-                     +'<div class="message-time">10:15 AM, Today</div>'
-                     +'</div>'
-                     +'<div class="message-body">'
-                     +msg
-                     +'</div>'
-                     +'</li>';
-
-                     $('.chatbar-div[msg-to="'+to+'"] .messages-list').append(mymsg);
-                     }
-                     }
-                     });
-
-                     setSlimScroll();
-
-                     });
-
-                     socket.on('private message', function(data){
-                     var msg = '<li class="message reply">'
-                     +'<div class="message-info">'
-                     +'<div class="bullet"></div>'
-                     +'<div class="contact-name">'+data.nick+'</div>'
-                     +'<div class="message-time">10:15 AM, Today</div>'
-                     +'</div>'
-                     +'<div class="message-body">'
-                     +data.msg
-                     +'</div>'
-                     +'</li>';
-                     $('.chatbar-div[msg-to="'+data.nick+'"] .messages-list').append(msg);
-                     });
-
-                     */
-
-                            function setSlimScroll() {
-                            var position = (readCookie("rtl-support") || location.pathname == "/index-rtl-fa.html" || location.pathname == "index-rtl-ar.html") ? 'right' : 'left';
-                                    $('.chatbar-messages .messages-list').slimscroll({
-                            position: position,
-                                    size: '4px',
-                                    color: themeprimary,
-                                    height: $(window).height() - 250,
-                            });
-                                    $('.chatbar-contacts .contacts-list').slimscroll({
-                            position: position,
-                                    size: '4px',
-                                    color: themeprimary,
-                                    height: $(window).height() - 86,
-                            });
-                            }
+            function setSlimScroll() {
+                var position = (readCookie("rtl-support") || location.pathname == "/index-rtl-fa.html" || location.pathname == "index-rtl-ar.html") ? 'right' : 'left';
+                $('.chatbar-messages .messages-list').slimscroll({
+                    position: position,
+                    size: '4px',
+                    color: themeprimary,
+                    height: $(window).height() - 250,
+                });
+                $('.chatbar-contacts .contacts-list').slimscroll({
+                    position: position,
+                    size: '4px',
+                    color: themeprimary,
+                    height: $(window).height() - 86,
+                });
+            }
 
         </script>
 
@@ -443,26 +444,26 @@
 
         <script src="<c:url value="/assets/js/select2/select2.js"/>"></script>
         <script src="<c:url value="/assets/js/validation/bootstrapValidator.js"/>"></script>
-
+        <script src="<c:url value="/assets/js/pace/pace.min.js"/>" type="text/javascript"></script>
         <script>
-        // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
-        $(window).bind("load", function () {
+            // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
+            $(window).bind("load", function () {
 
-            //Chat
-            $("#chat-link").click(function () {
-            $('.page-chatbar').toggleClass('open');
+                //Chat
+                $("#chat-link").click(function () {
+                    $('.page-chatbar').toggleClass('open');
                     $("#chat-link").toggleClass('open');
-            });
-                    /*Sets Themed Colors Based on Themes*/
-                    themeprimary = getThemeColorFromCss('themeprimary');
-                    themesecondary = getThemeColorFromCss('themesecondary');
-                    themethirdcolor = getThemeColorFromCss('themethirdcolor');
-                    themefourthcolor = getThemeColorFromCss('themefourthcolor');
-                    themefifthcolor = getThemeColorFromCss('themefifthcolor');
-                    //Sets The Hidden Chart Width
-                    $('#dashboard-bandwidth-chart')
-                    .data('width', $('.box-tabbs')
-                            .width() - 20);
+                });
+                /*Sets Themed Colors Based on Themes*/
+                themeprimary = getThemeColorFromCss('themeprimary');
+                themesecondary = getThemeColorFromCss('themesecondary');
+                themethirdcolor = getThemeColorFromCss('themethirdcolor');
+                themefourthcolor = getThemeColorFromCss('themefourthcolor');
+                themefifthcolor = getThemeColorFromCss('themefifthcolor');
+                //Sets The Hidden Chart Width
+                $('#dashboard-bandwidth-chart')
+                        .data('width', $('.box-tabbs')
+                                .width() - 20);
 
             });
 
