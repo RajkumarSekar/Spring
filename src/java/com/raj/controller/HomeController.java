@@ -92,21 +92,25 @@ public class HomeController {
     public ModelAndView newuser() {
         return new ModelAndView("UserManagement");
     }
+    
+    @RequestMapping("/newcustomer1.do")
+    public ModelAndView newCustomer1() {
+        return new ModelAndView("Customer_Master_1");
+    }
 
     @RequestMapping(value="/soreCustomer.do", method = RequestMethod.POST)
-    public ResponseEntity<CustomerMaster1> soreCustomer(@RequestBody CustomerMaster1 customer){
+    public ResponseEntity<CustomerMaster> soreCustomer(@RequestBody CustomerMaster customer){
         
         Long id = (Long) commonService.insert(customer);
         return new ResponseEntity<>(customer, HttpStatus.OK);
         //return "test";
     }
-//    @RequestMapping(value = "/soreCustomer.do", method = RequestMethod.POST)
-//    public ResponseEntity<User> soreCustomer(@RequestBody User user) {
-//
-//        Long id = (Long) commonService.insert(user);
-//        return new ResponseEntity<>(user, HttpStatus.OK);
-//        //return "test";
-//    }
+    
+    @RequestMapping(value="/soreCustomer1.do", method = RequestMethod.POST)
+    public ResponseEntity<CustomerMaster1> soreCustomer1(@RequestBody CustomerMaster1 customer){        
+        Long id = (Long) commonService.insert(customer);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/getStates.do", headers = "Accept=application/json")
     public ResponseEntity<List<State>> getStatesOption(@RequestParam("cid") Long CID) {
