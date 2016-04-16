@@ -49,4 +49,5 @@ public class CommonService {
         return commonDao.insert(obj);
     }
     
+    
 }

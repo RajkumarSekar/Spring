@@ -1,0 +1,25 @@
+[
+    {
+        "name": "/dashboard.do",
+        "templateUrl": "dashboard.do",
+        "title": "Dashboard",
+        "data": {
+            "authorizedRoles": [
+                "ADMIN",
+                "EMPLOYEE"
+            ],
+            "menuCluster": "Dashboard"
+        }
+    },
+    {
+        "name": "/newcustomer.do",
+        "templateUrl": "newcustomer.do",
+        "title": "Customer master",
+        "data": {
+            "authorizedRoles": [
+                "*"
+            ],
+            "menuCluster": "Customer Master"
+        }
+    }
+]

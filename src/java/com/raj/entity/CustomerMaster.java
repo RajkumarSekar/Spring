@@ -5,8 +5,11 @@
  */
 package com.raj.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.raj.common.DateDeserializer;
 import java.io.Serializable;
 import java.util.Date;
+import javafx.beans.DefaultProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,24 +58,6 @@ public class CustomerMaster implements Serializable{
         createdDateTime = null;
     }
     
-
-    public CustomerMaster(String customerName, String address, String city, String postalCode, String TIN, String CSTNo, Date CSTDate, String phone, String fax, String emailId, String website, String contact, String contactPhone) {
-        this.customerName = customerName;
-        this.address = address;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.TIN = TIN;
-        this.CSTNo = CSTNo;
-        this.CSTDate = CSTDate;
-        this.phone = phone;
-        this.fax = fax;
-        this.emailId = emailId;
-        this.website = website;
-        this.contact = contact;
-        this.contactPhone = contactPhone;
-    }
-    
-   
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -160,6 +145,7 @@ public class CustomerMaster implements Serializable{
     }
     
     @Column(name = "CSTDate")
+    @JsonDeserialize(using = DateDeserializer.class)
     public Date getCSTDate() {
         return CSTDate;
     }
@@ -222,7 +208,7 @@ public class CustomerMaster implements Serializable{
         this.contactPhone = contactPhone;
     }
 
-    @Column(name = "RecordStatus")
+    @Column(name = "RecordStatus", columnDefinition = "varchar(30) default 'Active'")    
     public String getRecordStatus() {
         return recordStatus;
     }
@@ -232,6 +218,7 @@ public class CustomerMaster implements Serializable{
     }
 
     @Column(name = "CDate")
+    @Temporal(TemporalType.DATE)
     public Date getcDate() {
         return cDate;
     }

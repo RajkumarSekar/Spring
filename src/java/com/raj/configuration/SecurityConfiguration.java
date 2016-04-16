@@ -26,6 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     DataSource dataSource;
     
     @Autowired
+    SuccessLoginHandler successLoginHandler;
+    
+    @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
 //        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
@@ -47,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         .antMatchers("/", "/home.do").authenticated()
         .antMatchers("/admin/**").access("hasRole('ADMIN')")
         .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
-        .and().formLogin().loginPage("/login.do").defaultSuccessUrl("/home.do",true)
+        .and().formLogin().loginPage("/login.do").successHandler(successLoginHandler)
         .usernameParameter("username").passwordParameter("password")
         .and().exceptionHandling().accessDeniedPage("/access_denied.do");
       

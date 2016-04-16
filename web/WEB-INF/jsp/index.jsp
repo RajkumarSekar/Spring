@@ -9,15 +9,15 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
     <!-- Head -->
     <head>
         <meta name="_csrf" content="${_csrf.token}"/>
         <!-- default header name is X-CSRF-TOKEN -->
         <meta name="_csrf_header" content="${_csrf.headerName}"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Dashboard</title>
-
+<!--        <title>Dashboard</title>-->
+        <title ng-bind="title"></title>
         <meta name="description" content="Dashboard" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -202,7 +202,7 @@
                                 <i class="fa fa-home"></i>
                                 <a href="#">Home</a>
                             </li>
-                            <li class="active">Dashboard</li>
+                            <li class="active">{{title}}</li>
                         </ul>
                     </div>
                     <!-- /Page Breadcrumb -->
@@ -229,7 +229,7 @@
                     </div>
                     <!-- /Page Header -->
                     <!-- Page Body -->
-                    <div class="page-body" id="main-container" ng-app="myApp">
+                    <div class="page-body" id="main-container">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div id="results"></div>
                         </div>
@@ -250,8 +250,8 @@
         <script src="<c:url value="/assets/js/bootstrap.min.js"/>"></script>
         <script src="<c:url value="/assets/js/slimscroll/jquery.slimscroll.min.js"/>"></script>
         <script src="<c:url value="/assets/js/ajax-content-loader.js"/>"></script>
-        <script src="<c:url value="/assets/js/angular.min.js"/>"></script>
-        <script src="<c:url value="/assets/js/angular-route.min.js"/>"></script>
+        <script src="<c:url value="/assets/js/angular/angular.min.js"/>"></script>
+        <script src="<c:url value="/assets/js/angular/angular-route.min.js"/>"></script>
         <script src="<c:url value="/assets/js/app.js"/>" type="text/javascript"></script>
 
         <script src="<c:url value="/assets/js/angular_service/user_service.js"/>" type="text/javascript"></script>

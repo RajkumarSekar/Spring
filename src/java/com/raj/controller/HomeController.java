@@ -7,16 +7,17 @@ package com.raj.controller;
 
 import com.raj.entity.Country;
 import com.raj.entity.CustomerMaster;
-import com.raj.entity.CustomerMaster1;
 import com.raj.entity.Module;
 import com.raj.entity.State;
 import com.raj.entity.User;
 import com.raj.service.CommonService;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -99,18 +100,16 @@ public class HomeController {
     }
 
     @RequestMapping(value="/soreCustomer.do", method = RequestMethod.POST)
-    public ResponseEntity<CustomerMaster> soreCustomer(@RequestBody CustomerMaster customer){
-        
+    public ResponseEntity<CustomerMaster> soreCustomer(@RequestBody CustomerMaster customer,
+            HttpSession session){
+        customer.setCreatedBy((String) session.getAttribute("user"));
+        customer.setRecordStatus("Active");
+        customer.setcDate(new Date());
         Long id = (Long) commonService.insert(customer);
         return new ResponseEntity<>(customer, HttpStatus.OK);
         //return "test";
     }
     
-    @RequestMapping(value="/soreCustomer1.do", method = RequestMethod.POST)
-    public ResponseEntity<CustomerMaster1> soreCustomer1(@RequestBody CustomerMaster1 customer){        
-        Long id = (Long) commonService.insert(customer);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/getStates.do", headers = "Accept=application/json")
     public ResponseEntity<List<State>> getStatesOption(@RequestParam("cid") Long CID) {
